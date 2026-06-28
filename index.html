@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Founder English — 創業者英語訓練</title>
+<style>
+  :root{
+    --bg:#f6f1e7; --card:#fffaf0; --ink:#2e2517; --muted:#8a7d63;
+    --line:#e3d8c2; --sage:#6b8064; --sage-d:#56684f; --plum:#9b8fb5;
+    --amber:#c9a24a; --red:#b8503e; --shadow:0 1px 0 #efe6d2,0 8px 24px rgba(60,47,31,.07);
+    --r:16px; --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Noto Sans TC",-apple-system,"Segoe UI",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.6; padding-bottom:92px}
+  .wrap{max-width:680px; margin:0 auto; padding:18px 16px}
+  header{display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding:6px 2px 14px}
+  header h1{font-family:"Noto Serif TC",serif; font-size:20px; margin:0; letter-spacing:.5px}
+  header .streak{font-family:var(--mono); font-size:13px; color:var(--sage-d); background:#eef1e9; border:1px solid #d9e0cf; padding:5px 10px; border-radius:999px; white-space:nowrap}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); padding:18px; margin-bottom:14px}
+  h2{font-family:"Noto Serif TC",serif; font-size:16px; margin:0 0 10px}
+  .muted{color:var(--muted); font-size:13px}
+  .row{display:flex; gap:10px; flex-wrap:wrap}
+  .stat{flex:1; min-width:80px; text-align:center; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 6px}
+  .stat b{display:block; font-family:var(--mono); font-size:22px; color:var(--sage-d)}
+  .stat span{font-size:11px; color:var(--muted)}
+  button{font-family:inherit; cursor:pointer; border:none; border-radius:12px; font-size:15px; padding:12px 16px; transition:transform .05s, filter .15s}
+  button:active{transform:translateY(1px)}
+  .btn-primary{background:var(--sage); color:#fff; width:100%; font-weight:600; letter-spacing:.5px}
+  .btn-primary:hover{filter:brightness(1.05)}
+  .btn-primary:disabled{background:#c8cdbf; cursor:default}
+  .btn-ghost{background:#f0ead9; color:var(--ink); border:1px solid var(--line)}
+  nav{position:fixed; bottom:0; left:0; right:0; background:rgba(255,250,240,.94); backdrop-filter:blur(8px); border-top:1px solid var(--line); display:flex; z-index:20}
+  nav button{flex:1; background:none; border-radius:0; padding:9px 2px 11px; color:var(--muted); font-size:10.5px; display:flex; flex-direction:column; align-items:center; gap:3px}
+  nav button .ic{font-family:var(--mono); font-size:16px; line-height:1}
+  nav button.on{color:var(--sage-d); font-weight:700}
+  .spk{display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#eef1e9; border:1px solid #d9e0cf; color:var(--sage-d); font-size:15px; padding:0}
+  .spk:hover{background:#e3ead9}
+  .fc{min-height:210px; display:flex; flex-direction:column; justify-content:center; text-align:center; padding:22px 16px}
+  .fc .term{font-family:"Noto Serif TC",serif; font-size:29px; font-weight:700; margin-bottom:4px}
+  .fc .pos{font-family:var(--mono); font-size:12px; color:var(--plum); margin-bottom:12px}
+  .fc .zh{font-size:21px; margin:4px 0 8px}
+  .fc .def{font-size:14px; color:var(--muted); margin-bottom:12px}
+  .fc .ex{font-size:15px; font-style:italic; background:#f4eedd; border-left:3px solid var(--amber); padding:10px 12px; border-radius:8px; text-align:left; display:flex; gap:8px; align-items:flex-start}
+  .ex .spk{flex:0 0 auto; width:30px; height:30px; font-size:13px}
+  .grades{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:14px}
+  .grades button{font-size:13px; padding:12px 4px; color:#fff; font-weight:600}
+  .g-again{background:#b8503e} .g-hard{background:#c9952f} .g-good{background:#6b8064} .g-easy{background:#7d93b0}
+  .grades small{display:block; font-family:var(--mono); font-size:9px; opacity:.85; font-weight:400; margin-top:2px}
+  .done{text-align:center; padding:30px 10px}
+  .done .big{font-size:40px}
+  .reading p{font-size:16px; line-height:1.85}
+  .gw{border-bottom:1.5px dotted var(--amber); cursor:pointer; color:var(--sage-d); font-weight:600}
+  .glossbox{margin-top:14px; border-top:1px dashed var(--line); padding-top:12px}
+  .glossbox div{font-size:13.5px; margin-bottom:7px}
+  .glossbox b{color:var(--sage-d)}
+  .pill{font-family:var(--mono); font-size:11px; color:var(--muted); background:#f0ead9; padding:3px 8px; border-radius:999px}
+  textarea{width:100%; min-height:88px; font-family:inherit; font-size:15px; border:1px solid var(--line); border-radius:12px; padding:12px; background:#fffdf8; resize:vertical; color:var(--ink)}
+  .checklist{list-style:none; padding:0; margin:0}
+  .checklist li{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:15px}
+  .checklist li:last-child{border-bottom:none}
+  .ck{width:22px; height:22px; border-radius:6px; border:2px solid var(--line); display:inline-flex; align-items:center; justify-content:center; font-size:13px; color:#fff; flex:0 0 auto}
+  .ck.on{background:var(--sage); border-color:var(--sage)}
+  .checklist li .go{margin-left:auto; font-size:12px; color:var(--sage-d); background:#eef1e9; border:1px solid #d9e0cf; padding:5px 10px; border-radius:999px}
+  .deck-item{display:flex; justify-content:space-between; gap:10px; padding:9px 2px; border-bottom:1px solid var(--line); font-size:14px; align-items:center}
+  .deck-item:last-child{border-bottom:none}
+  .deck-item .t{font-weight:600}
+  .deck-item .z{color:var(--muted); font-size:12.5px}
+  .deck-item .b{font-family:var(--mono); font-size:10px; color:var(--plum); white-space:nowrap}
+  .filterbar{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px}
+  .filterbar button{font-size:11px; padding:6px 10px; background:#f0ead9; color:var(--muted)}
+  .filterbar button.on{background:var(--sage); color:#fff}
+  .progbar{height:8px; background:#eadfca; border-radius:99px; overflow:hidden; margin:8px 0}
+  .progbar i{display:block; height:100%; background:var(--sage)}
+  a.reset{color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer}
+  .shadow-sent{font-family:"Noto Serif TC",serif; font-size:21px; line-height:1.5; margin:6px 0 4px}
+  .shadow-zh{color:var(--muted); font-size:15px; margin-bottom:14px}
+  .repdots{display:flex; gap:8px; justify-content:center; margin:12px 0}
+  .repdots span{width:14px; height:14px; border-radius:50%; border:2px solid var(--line)}
+  .repdots span.on{background:var(--amber); border-color:var(--amber)}
+  .hint{font-size:12.5px; color:var(--muted); background:#f4eedd; border-radius:10px; padding:10px 12px; margin-top:6px}
+  .center{text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Founder English</h1><span class="streak" id="streakBadge">🔥 0 天</span></header>
+  <div id="view"></div>
+</div>
+<nav>
+  <button data-tab="today" class="on"><span class="ic">◎</span>今天</button>
+  <button data-tab="cards"><span class="ic">▤</span>單字</button>
+  <button data-tab="read"><span class="ic">▢</span>閱讀</button>
+  <button data-tab="speak"><span class="ic">◑</span>口說</button>
+  <button data-tab="stats"><span class="ic">◧</span>進度</button>
+</nav>
+
+<script>
+/* ============================================================
+   Founder English — personal, offline, single file.
+   Research-backed design:
+   - SRS + retrieval practice (testing effect)  -> 單字
+   - Comprehensible input (i+1, ~85% understood)-> 閱讀
+   - Pushed output + Shadowing (Swain / 2025 review) -> 口說 + 每日一寫
+   - TTS audio everywhere (offline), context-rich cards (Hulstijn)
+   ============================================================ */
+
+/* ---------------- DATA: VOCAB DECK ---------------- */
+const CATS = {
+  everyday:"日常 Everyday", fund:"募資 Fundraising", metric:"數據 Metrics",
+  product:"產品 Product", pitch:"簡報 Pitch", legal:"條款 Cap/Legal"
+};
+// [term, pos, 中文, 中文解釋, 例句, cat]
+const VOCAB = [
+  // ---- Everyday English & conversational chunks (formulaic chunks aid fluency) ----
+  ["How's it going?","phr.","最近好嗎？","美式打招呼，比 How are you 更口語","Hey, how's it going? Long time no see.","everyday"],
+  ["I appreciate it.","phr.","我很感謝","比 thanks 更有誠意的道謝","Thanks for the intro — I really appreciate it.","everyday"],
+  ["Let me get back to you.","phr.","我晚點回覆你","還沒答案、之後再回覆","Good question. Let me get back to you on that.","everyday"],
+  ["Sounds good.","phr.","聽起來不錯／好啊","輕鬆同意","Coffee at three? Sounds good.","everyday"],
+  ["No worries.","phr.","沒問題／別在意","回應道歉或道謝","No worries, it happens to everyone.","everyday"],
+  ["Could you say that again?","phr.","可以再說一次嗎？","沒聽懂時最有用的一句","Sorry, could you say that again a bit slower?","everyday"],
+  ["I'm not sure I follow.","phr.","我不太懂你的意思","禮貌表示沒跟上","I'm not sure I follow — can you give an example?","everyday"],
+  ["Let's circle back.","phr.","我們晚點再回來談","暫時跳過、稍後再談","Let's circle back to pricing after the demo.","everyday"],
+  ["Does that make sense?","phr.","這樣說得通嗎？","確認對方理解","We charge per seat. Does that make sense?","everyday"],
+  ["Can we reschedule?","phr.","可以改時間嗎？","改約","Something came up — can we reschedule to Friday?","everyday"],
+  ["What do you do?","phr.","你是做什麼的？","認識新朋友必問","So, what do you do?  — I'm building a startup.","everyday"],
+  ["Nice to meet you.","phr.","很高興認識你","初次見面","Nice to meet you, I've heard a lot about you.","everyday"],
+  ["To be honest,","phr.","老實說，","開場、表達真實看法","To be honest, we're still figuring that out.","everyday"],
+  ["Long story short,","phr.","長話短說，","快速帶過細節","Long story short, we pivoted and it worked.","everyday"],
+  ["Just to clarify,","phr.","我想釐清一下，","確認細節、避免誤會","Just to clarify, do you mean monthly or yearly?","everyday"],
+  ["I'm on it.","phr.","我在處理了","表示馬上去做","Don't worry about the deck — I'm on it.","everyday"],
+  ["Let's touch base.","phr.","我們再碰個面／聊聊","保持聯繫","Let's touch base next week to see where we are.","everyday"],
+  ["reach out","v.","主動聯繫","聯絡某人","Feel free to reach out if you have questions.","everyday"],
+  ["follow up","v.","後續跟進","事後再聯繫或追蹤","I'll follow up with an email tonight.","everyday"],
+  ["heads up","n.","提前告知","事先提醒","Just a heads up — the call moved to 4pm.","everyday"],
+  ["on the same page","phr.","有共識","想法一致","Let's make sure we're on the same page.","everyday"],
+  ["ballpark","n.","大概的數字","粗估範圍","What's the ballpark cost — just roughly?","everyday"],
+  ["down to earth","adj.","務實親切","形容人不擺架子","The investor was really down to earth.","everyday"],
+  ["a no-brainer","n.","顯而易見的選擇","不用想就該做","At that price, it's a no-brainer.","everyday"],
+  ["take it with a grain of salt","phr.","姑且聽之／別全信","保留一點懷疑","It's just one user, so take it with a grain of salt.","everyday"],
+  // ---- Fundraising ----
+  ["runway","n.","資金跑道","現有資金還能營運多久（通常以月計）","At our current burn, we have about 14 months of runway.","fund"],
+  ["burn rate","n.","燒錢速度","每月淨流出的現金","Our monthly burn rate is around forty thousand dollars.","fund"],
+  ["bootstrapping","n.","自力創業","不靠外部投資、用自有收入成長","We were bootstrapping for the first year before raising.","fund"],
+  ["angel investor","n.","天使投資人","用自己的錢投早期新創的個人","An angel wrote our first check of fifty thousand.","fund"],
+  ["venture capital","n.","創投（VC）","管理基金、投資高成長新創","Venture capital firms look for huge potential returns.","fund"],
+  ["accelerator","n.","加速器","給早期團隊資金+輔導的計畫，如 Y Combinator","We got into an accelerator that gave us mentorship and funding.","fund"],
+  ["valuation","n.","估值","公司被認定的價值","We raised our seed round at a ten million dollar valuation.","fund"],
+  ["pre-money valuation","n.","投資前估值","拿到這筆投資「之前」的估值","Pre-money was eight million, so it's ten million post-money.","fund"],
+  ["post-money valuation","n.","投資後估值","加上新投資後的估值","Post-money equals pre-money plus the new money.","fund"],
+  ["term sheet","n.","投資條件書","列出投資主要條件的非正式約定","We signed a term sheet with the lead investor last week.","fund"],
+  ["SAFE","n.","未來股權簡單協議","YC 發明的早期工具，先拿錢、之後轉股","We're raising on a SAFE with a five million cap.","fund"],
+  ["convertible note","n.","可轉換債券","先當借款、未來輪轉成股權","The note converts into equity at the next priced round.","fund"],
+  ["valuation cap","n.","估值上限","SAFE/可轉債約定的轉換上限，保護早期投資人","A low cap rewards investors who took the early risk.","fund"],
+  ["lead investor","n.","領投人","設定條件、帶頭投資的人","Once you have a lead, the round fills up fast.","fund"],
+  ["due diligence","n.","盡職調查","投資前的查核（財務、法律、技術）","They're doing due diligence on our financials.","fund"],
+  ["bridge round","n.","過橋輪","兩輪之間的短期補血募資","We did a small bridge round to extend our runway.","fund"],
+  ["down round","n.","估值下跌輪","以低於前一輪的估值募資","A down round means raising at a lower valuation.","fund"],
+  ["dry powder","n.","未動用資金","VC 手上還沒投出去的錢","Funds still have plenty of dry powder this year.","fund"],
+  ["ticket size","n.","單筆投資金額","一位投資人單次投入的金額","Their typical ticket size is two hundred fifty thousand.","fund"],
+  ["deal flow","n.","案源","投資人接觸到的投資機會量","A strong network gives a VC better deal flow.","fund"],
+  ["seed round","n.","種子輪","驗證產品與早期成長的第一筆正式募資","We closed our seed round to fund the first ten hires.","fund"],
+  ["Series A","n.","A 輪","已有成長、要規模化的募資輪","Series A is about scaling what already works.","fund"],
+  ["demo day","n.","路演日","加速器結束時向投資人展示的活動","We pitched 200 investors at demo day.","fund"],
+  // ---- Legal / Cap ----
+  ["cap table","n.","股權結構表","誰持有多少股權的清單","Send me your cap table to see the ownership breakdown.","legal"],
+  ["dilution","n.","股權稀釋","發新股後既有股東佔比下降","Every round causes some dilution for existing holders.","legal"],
+  ["equity","n.","股權","公司的所有權份額","Early employees are paid partly in equity.","legal"],
+  ["option pool","n.","員工選擇權池","預留給未來員工的股權","Investors want a ten percent option pool for hiring.","legal"],
+  ["vesting","n.","股權分期歸屬","股權隨時間逐步真正歸你","Founder shares typically vest over four years.","legal"],
+  ["cliff","n.","懸崖期","滿一定期間才開始歸屬，常為一年","There's a one-year cliff before any equity vests.","legal"],
+  ["liquidation preference","n.","清算優先權","退出時投資人優先拿回錢的權利","A 1x preference means investors get their money back first.","legal"],
+  ["pro rata rights","n.","按比例跟投權","未來輪維持持股比例的權利","Pro rata rights let early investors keep their percentage.","legal"],
+  ["anti-dilution","n.","反稀釋條款","down round 時保護投資人持股的條款","Anti-dilution clauses kick in during a down round.","legal"],
+  ["board seat","n.","董事會席次","在董事會的一個位子","The lead investor took a board seat.","legal"],
+  ["carry","n.","績效分成","GP 從基金獲利抽的成（carried interest）","VCs earn from management fees and carry.","legal"],
+  ["exit","n.","退出","創辦人/投資人變現：被併購或上市","Investors care about a big exit down the road.","legal"],
+  ["acquisition","n.","併購","被另一家公司買下","The startup grew through an acquisition.","legal"],
+  ["IPO","n.","首次公開發行","公司股票首次在市場上市","Going public through an IPO is one path to exit.","legal"],
+  // ---- Metrics ----
+  ["MRR","n.","每月經常性收入","Monthly Recurring Revenue","We just crossed twenty thousand in MRR.","metric"],
+  ["ARR","n.","年度經常性收入","Annual Recurring Revenue，約 MRR×12","ARR is roughly your MRR times twelve.","metric"],
+  ["churn rate","n.","流失率","一段期間流失的客戶比例","Our monthly churn is under three percent.","metric"],
+  ["CAC","n.","獲客成本","Customer Acquisition Cost","Paid ads pushed our CAC too high.","metric"],
+  ["LTV","n.","顧客終身價值","一個客戶一生帶來的收入","A healthy business keeps LTV well above CAC.","metric"],
+  ["unit economics","n.","單位經濟效益","賣一個單位賺或賠多少","Investors want positive unit economics before scaling.","metric"],
+  ["gross margin","n.","毛利率","收入減直接成本後的比例","Software often runs eighty percent gross margins.","metric"],
+  ["payback period","n.","回本期","賺回獲客成本所需時間","Our CAC payback period is about six months.","metric"],
+  ["retention","n.","留存","用戶持續使用、沒有流失","Strong retention is the clearest sign of value.","metric"],
+  ["net revenue retention","n.","淨收入留存率","既有客戶收入隨時間的變化（NRR）","Above 100% NRR means customers grow over time.","metric"],
+  ["rule of 40","n.","40 法則","成長率＋利潤率應 ≥ 40%","By the rule of forty, growth plus margin beats forty.","metric"],
+  ["TAM","n.","總潛在市場","Total Addressable Market，整個市場大小","Our TAM is around ten billion dollars globally.","metric"],
+  ["SOM","n.","可獲取市場","你實際能拿下的那一塊","TAM is the whole pie, SOM is the slice you can win.","metric"],
+  ["North Star metric","n.","北極星指標","最能代表產品價值的單一關鍵指標","Our North Star metric is weekly active readers.","metric"],
+  ["cohort","n.","同期群","同一時間進來的一批用戶","We track retention by monthly signup cohort.","metric"],
+  ["KPI","n.","關鍵績效指標","Key Performance Indicator","Each team owns one or two KPIs.","metric"],
+  ["GMV","n.","商品交易總額","平台上交易的總金額","Marketplaces often report GMV instead of revenue.","metric"],
+  // ---- Product / Growth ----
+  ["MVP","n.","最小可行產品","Minimum Viable Product","Ship an MVP first, then iterate from feedback.","product"],
+  ["product-market fit","n.","產品市場契合","產品真正打中市場需求（PMF）","Before PMF, focus on users, not scaling.","product"],
+  ["founder-market fit","n.","創辦人市場契合","創辦人與這個市場特別契合","Your background gives you strong founder-market fit.","product"],
+  ["pivot","v./n.","轉向","改變產品方向或商業模式","We pivoted from a tool into a marketplace.","product"],
+  ["traction","n.","成長動能","看得見的成長與實績","Investors fund traction, not just ideas.","product"],
+  ["moat","n.","護城河","難以被對手複製的競爭壁壘","Network effects are our main moat.","product"],
+  ["network effect","n.","網路效應","用戶越多、產品對每個人越有價值","Each new user makes the product better for everyone.","product"],
+  ["flywheel","n.","飛輪","自我強化的成長循環","Content brings users, users make content — the flywheel.","product"],
+  ["go-to-market","n.","市場進入策略","怎麼把產品賣到市場（GTM）","Our go-to-market is community-led.","product"],
+  ["onboarding","n.","新用戶導入","引導新用戶上手的流程","We rebuilt onboarding to lift activation.","product"],
+  ["activation","n.","啟用","用戶完成關鍵首動作的時刻","Activation is when a user writes their first note.","product"],
+  ["stickiness","n.","黏著度","用戶持續回來的程度","High stickiness shows people actually need it.","product"],
+  ["scalable","adj.","可規模化的","成長時成本不會等比上升","Software is scalable in a way services are not.","product"],
+  ["SaaS","n.","軟體即服務","Software as a Service，訂閱制軟體","Most SaaS businesses bill monthly or yearly.","product"],
+  // ---- Pitch ----
+  ["pitch deck","n.","募資簡報","給投資人看的簡報（約 10 頁）","Keep your pitch deck to around ten slides.","pitch"],
+  ["elevator pitch","n.","電梯簡報","30 秒講清楚你在做什麼","Can you give me your elevator pitch?","pitch"],
+  ["value proposition","n.","價值主張","你為客戶解決什麼、為何選你","Your value proposition should fit in one sentence.","pitch"],
+  ["the ask","n.","募資請求","你要募多少、要對方做什麼","Always end the pitch with a clear ask.","pitch"],
+  ["use of funds","n.","資金用途","募到的錢要怎麼花","One slide should explain your use of funds.","pitch"],
+  ["competitive landscape","n.","競爭格局","市場上有誰、你的位置","Show where you sit in the competitive landscape.","pitch"],
+  ["one-liner","n.","一句話介紹","用一句話說清楚公司","Our one-liner is: make friends through books.","pitch"]
+];
+
+/* ---------------- DATA: READING (comprehensible input) ---------------- */
+const READINGS = [
+  {title:"What is a SAFE?",
+   body:`When founders raise their first money, they often use a **SAFE** instead of selling shares right away. A SAFE lets an investor give you cash today in exchange for **equity** later, usually at the next priced round. To protect early investors, a SAFE includes a **valuation cap**, and sometimes a discount. This keeps things simple: there is no interest and no maturity date, and you avoid setting a **valuation** too early. For a young startup with little **traction**, a SAFE is fast, cheap, and standard in the US.`,
+   gloss:[["SAFE","未來股權簡單協議"],["equity","股權"],["valuation cap","估值上限"],["valuation","估值"],["traction","成長動能"]]},
+  {title:"Burn rate and runway",
+   body:`Every founder must watch two numbers. Your **burn rate** is how much cash you spend each month after income. Your **runway** is how many months you can survive before the money runs out. If you burn forty thousand a month and hold half a million, your runway is about twelve months. Investors look at **unit economics** to judge whether spending more makes sense. Raising a **bridge round** can buy time, but the real goal is to reach **product-market fit** before the runway ends.`,
+   gloss:[["burn rate","燒錢速度"],["runway","資金跑道"],["unit economics","單位經濟效益"],["bridge round","過橋輪"],["product-market fit","產品市場契合"]]},
+  {title:"Why investors fund traction",
+   body:`Ideas are cheap; **traction** is rare. When a VC reviews a deal, they want proof that real people use and pay for your product. Strong **retention**, growing **MRR**, and low **churn rate** all signal that you have something people want. A defensible **moat**, such as a **network effect**, makes them believe the lead can last. In the end, your **pitch deck** should tell one clear story: here is the traction, here is the moat, and here is the **ask**.`,
+   gloss:[["traction","成長動能"],["retention","留存"],["MRR","每月經常性收入"],["churn rate","流失率"],["moat","護城河"],["network effect","網路效應"],["pitch deck","募資簡報"],["the ask","募資請求"]]},
+  {title:"Small talk before the meeting",
+   body:`Before any pitch, there's small talk — and it matters more than founders think. A warm "**How's it going?**" and a genuine "**Nice to meet you**" set the tone. If you don't catch something, just say "**Could you say that again?**" — no one minds. When you need time to think, "**Let me get back to you**" is perfectly normal. Investors are people; being **down to earth** and easy to talk to is part of the pitch. Keep it light, keep it human, and remember you can always "**circle back**" to the hard questions later.`,
+   gloss:[["How's it going?","最近好嗎"],["Nice to meet you","很高興認識你"],["Could you say that again?","可以再說一次嗎"],["Let me get back to you","我晚點回覆你"],["down to earth","務實親切"],["circle back","晚點再回來談"]]}
+];
+
+/* ---------------- DATA: SHADOWING (output / pronunciation) ---------------- */
+const SHADOW = [
+  ["Hey, how's it going? Long time no see.","嘿，最近好嗎？好久不見。"],
+  ["Thanks so much — I really appreciate it.","太感謝了，我真的很感激。"],
+  ["Sorry, could you say that again a bit slower?","抱歉，可以再說一次、慢一點嗎？"],
+  ["Let me get back to you on that by tomorrow.","這件事我明天回覆你。"],
+  ["That makes sense. Let's move forward.","這說得通，我們繼續推進。"],
+  ["I'm building a startup that helps people make friends through books.","我在做一個透過書交朋友的新創。"],
+  ["We're currently raising a seed round.","我們目前正在募種子輪。"],
+  ["Our monthly burn is low, so we have a long runway.","我們每月燒錢低，所以跑道很長。"],
+  ["We're seeing strong retention from our early users.","我們早期用戶的留存很強。"],
+  ["What's the typical ticket size for your fund?","你們基金的單筆投資金額大概多少？"],
+  ["I'd love to walk you through our pitch deck.","我很樂意帶你看過我們的募資簡報。"],
+  ["Here's the problem we're solving.","這是我們在解決的問題。"],
+  ["Let's circle back to that after the demo.","demo 之後我們再回來談這個。"],
+  ["To be honest, that's still an open question for us.","老實說，那對我們還是個未解的問題。"],
+  ["Could we set up a quick call next week?","我們下週可以約個簡短通話嗎？"],
+  ["I'll follow up with an email tonight.","我今晚會寄 email 跟進。"]
+];
+
+/* ---------------- DATA: SPEAKING PROMPTS (pushed output) ---------------- */
+const PROMPTS = [
+  "Say your one-line elevator pitch for Folio out loud, in English.",
+  "Out loud: explain Folio's value proposition to a US investor in 2 sentences.",
+  "Describe Folio's moat (why it's hard to copy) — say it aloud.",
+  "Say the 'ask': how much you'd raise and the use of funds.",
+  "Explain your go-to-market for the US, out loud, in 2 sentences.",
+  "Out loud: what's your North Star metric, and why?",
+  "Introduce yourself to a stranger at a startup event — out loud.",
+  "Explain product-market fit in your own English words, aloud."
+];
+
+/* ---------------- STATE / STORAGE ---------------- */
+const KEY="founder_english_v2", DAY=86400000, NEW_PER_DAY=8;
+let S = load();
+function load(){
+  let d; try{ d=JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+  if(!d) d={};
+  d.cards=d.cards||{}; d.streak=d.streak||0; d.lastStudy=d.lastStudy||null;
+  d.newToday=d.newToday||{date:null,count:0}; d.reviews=d.reviews||0;
+  d.readIdx=d.readIdx||0; d.shadowIdx=d.shadowIdx||0;
+  d.writeLog=d.writeLog||{}; d.daily=d.daily||{date:null,review:false,read:false,speak:false,write:false};
+  return d;
+}
+function save(){ localStorage.setItem(KEY, JSON.stringify(S)); }
+function todayStr(){const t=new Date();return t.getFullYear()+"-"+(t.getMonth()+1)+"-"+t.getDate();}
+function cardState(id){ if(!S.cards[id]) S.cards[id]={due:0,interval:0,ease:2.5,reps:0,seen:false}; return S.cards[id]; }
+function resetNewCounter(){const t=todayStr(); if(S.newToday.date!==t) S.newToday={date:t,count:0};}
+function resetDaily(){const t=todayStr(); if(S.daily.date!==t) S.daily={date:t,review:false,read:false,speak:false,write:false};}
+function setDaily(f){ resetDaily(); S.daily[f]=true; save(); }
+
+function buildQueue(){
+  resetNewCounter();
+  const now=Date.now(), due=[], fresh=[];
+  VOCAB.forEach((v,i)=>{const c=cardState(i); if(c.seen){if(c.due<=now)due.push(i);} else fresh.push(i);});
+  const room=Math.max(0,NEW_PER_DAY-S.newToday.count);
+  return due.concat(fresh.slice(0,room));
+}
+function grade(id,g){
+  const c=cardState(id), wasNew=!c.seen;
+  if(g==="again"){c.reps=0;c.interval=0;c.ease=Math.max(1.3,c.ease-0.2);c.due=Date.now()+5*60000;}
+  else{
+    if(g==="hard"){c.interval=Math.max(1,Math.round((c.interval||1)*1.2));c.ease=Math.max(1.3,c.ease-0.15);}
+    else if(g==="good"){c.interval=c.reps===0?1:c.reps===1?3:Math.round((c.interval||1)*c.ease);}
+    else{c.interval=c.reps===0?2:c.reps===1?5:Math.round((c.interval||1)*c.ease*1.3);c.ease=c.ease+0.15;}
+    c.reps++; c.due=Date.now()+c.interval*DAY;
+  }
+  if(wasNew){c.seen=true;resetNewCounter();S.newToday.count++;}
+  S.reviews++; markStudied(); setDaily("review"); save();
+}
+function markStudied(){
+  const t=todayStr(); if(S.lastStudy===t) return;
+  const y=new Date(Date.now()-DAY), ys=y.getFullYear()+"-"+(y.getMonth()+1)+"-"+y.getDate();
+  S.streak=(S.lastStudy===ys)?S.streak+1:1; S.lastStudy=t;
+}
+function dueCount(){resetNewCounter();const now=Date.now();let n=0;VOCAB.forEach((v,i)=>{const c=cardState(i);if(c.seen&&c.due<=now)n++;});return n;}
+function learnedCount(){let n=0;for(const k in S.cards)if(S.cards[k].seen)n++;return n;}
+function newLeftToday(){resetNewCounter();const u=VOCAB.filter((v,i)=>!cardState(i).seen).length;return Math.min(u,Math.max(0,NEW_PER_DAY-S.newToday.count));}
+
+/* ---------------- TTS (offline speech) ---------------- */
+let _voice=null;
+function pickVoice(){
+  const vs=window.speechSynthesis?window.speechSynthesis.getVoices():[];
+  _voice = vs.find(v=>/en[-_]US/i.test(v.lang)&&/natural|google|samantha|aaron/i.test(v.name))
+        || vs.find(v=>/en[-_]US/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null;
+}
+if(window.speechSynthesis){ pickVoice(); window.speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text,rate){
+  if(!window.speechSynthesis){ alert("此瀏覽器不支援語音，建議用 Chrome / Edge。"); return; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="en-US"; u.rate=rate||0.9; if(_voice)u.voice=_voice;
+  window.speechSynthesis.speak(u);
+}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function q(s){return s.replace(/"/g,"&quot;");}
+
+/* ---------------- 錄音對比（需 HTTPS，如 GitHub Pages） ---------------- */
+let _rec=null,_chunks=[],_stream=null;
+async function toggleRecord(btn,out){
+  if(_rec && _rec.state==="recording"){ _rec.stop(); return; }
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||typeof MediaRecorder==="undefined"){
+    out.innerHTML='<div class="hint">這個環境不支援錄音（多半是直接開檔 file://）。部署到 GitHub Pages（HTTPS）後就能錄。</div>'; return;
+  }
+  try{ _stream=await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ out.innerHTML='<div class="hint">沒拿到麥克風權限。請在瀏覽器允許麥克風，或先部署到 HTTPS 再試。</div>'; return; }
+  _chunks=[]; _rec=new MediaRecorder(_stream);
+  _rec.ondataavailable=e=>{ if(e.data.size>0)_chunks.push(e.data); };
+  _rec.onstop=()=>{
+    const blob=new Blob(_chunks,{type:_rec.mimeType||"audio/webm"}), url=URL.createObjectURL(blob);
+    out.innerHTML='<div class="muted" style="font-size:12px;margin-bottom:6px">你的錄音（跟上面 🔊 範例比對語調）：</div><audio controls src="'+url+'" style="width:100%"></audio>';
+    if(_stream){_stream.getTracks().forEach(t=>t.stop());_stream=null;}
+    btn.textContent="● 重新錄音"; markStudied(); setDaily("speak"); save();
+  };
+  _rec.start(); btn.textContent="⏹ 停止錄音（說完按這）";
+}
+
+/* ---------------- ROUTER ---------------- */
+const view=document.getElementById("view");
+let tab="today", review=null;
+function render(){
+  document.getElementById("streakBadge").textContent="🔥 "+S.streak+" 天";
+  ({today:renderToday,cards:renderCards,read:renderRead,speak:renderSpeak,stats:renderStats}[tab])();
+}
+
+/* ---- TODAY ---- */
+function renderToday(){
+  resetDaily();
+  const du=dueCount(), nw=newLeftToday(), total=du+nw, d=S.daily;
+  const items=[
+    ["review","複習單字（間隔重複）","cards", total>0?("待"+du+" ＋新"+nw):"今天已複習完"],
+    ["read","讀一篇短文（情境輸入）","read","去閱讀"],
+    ["speak","跟讀＋開口（口說輸出）","speak","去口說"],
+    ["write","寫一句英文（輸出筆記）","today","往下寫"]
+  ];
+  const doneN=items.filter(i=>d[i[0]]).length;
+  view.innerHTML=`
+    <div class="card">
+      <h2>今天的四件事 · ${doneN}/4 ${doneN===4?'🎉':''}</h2>
+      <p class="muted" style="margin:-4px 0 12px">研究結論：輸入＋輸出＋間隔複習一起做，效果遠大於單背單字。每天 15 分鐘就好。</p>
+      <ul class="checklist">
+        ${items.map(([k,label,go,note])=>`
+          <li>
+            <span class="ck ${d[k]?'on':''}">${d[k]?'✓':''}</span>
+            <span>${label}<br><span class="muted" style="font-size:12px">${note}</span></span>
+            <button class="go" data-go="${go}">${d[k]?'再做':'開始'}</button>
+          </li>`).join("")}
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>每日一寫 · Output</h2>
+      <p class="muted" style="margin:-4px 0 10px">用英文回答（一兩句就好）。寫＝逼自己「注意到不會的地方」：</p>
+      <p style="font-weight:600; font-style:italic">“${esc(PROMPTS[new Date().getDate()%PROMPTS.length])}”</p>
+      <textarea id="wbox" placeholder="Write in English...">${esc(S.writeLog[todayStr()]||"")}</textarea>
+      <button class="btn-ghost" id="saveWrite" style="width:100%;margin-top:10px">${S.writeLog[todayStr()]?'已存 ✓ 更新':'存檔'}</button>
+    </div>
+
+    <div class="card">
+      <h2>有科學根據的學法（這個 App 怎麼設計的）</h2>
+      <p class="muted" style="margin:0">
+        ① <b>間隔重複＋主動回想</b>：背完會忘，間隔複習＋先想再看答案，記得最久。<br>
+        ② <b>可理解輸入 i+1</b>：讀略高於你程度、約 85% 看得懂的內容，文法自然吸收。<br>
+        ③ <b>逼出輸出（Swain）</b>：只「聽懂」不會讓你「開口」。要寫、要說。<br>
+        ④ <b>跟讀 Shadowing</b>：沒對象練口說時最有效，練發音和語調。
+      </p>
+    </div>`;
+  view.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{
+    const g=b.dataset.go;
+    if(g==="cards"&&total>0){ startReview(); }
+    else if(g==="today"){ document.getElementById("wbox").focus(); }
+    else { tab=g; setNav(); render(); }
+  });
+  document.getElementById("saveWrite").onclick=()=>{
+    S.writeLog[todayStr()]=document.getElementById("wbox").value.trim();
+    markStudied(); setDaily("write"); save(); render();
+  };
+}
+
+/* ---- REVIEW SESSION ---- */
+function startReview(){ review={queue:buildQueue(),i:0,flipped:false}; tab="cards"; setNav(); renderReview(); }
+function renderReview(){
+  if(!review||review.i>=review.queue.length){
+    review=null;
+    view.innerHTML=`<div class="card done"><div class="big">🎉</div>
+      <h2 style="margin:8px 0">複習完成！</h2>
+      <p class="muted">已連續 ${S.streak} 天 · 累計學過 ${learnedCount()} / ${VOCAB.length} 個</p>
+      <button class="btn-primary" style="margin-top:12px" onclick="tab='today';setNav();render()">回今天</button></div>`;
+    return;
+  }
+  const id=review.queue[review.i], v=VOCAB[id], f=review.flipped;
+  view.innerHTML=`
+    <div class="card">
+      <div class="muted" style="display:flex;justify-content:space-between">
+        <span>${review.i+1} / ${review.queue.length}</span><span class="pill">${CATS[v[5]]}</span>
+      </div>
+      <div class="fc">
+        <div class="term">${esc(v[0])} <button class="spk" data-spk="${q(v[0])}">🔊</button></div>
+        <div class="pos">${esc(v[1])}</div>
+        ${f?`<div class="zh">${esc(v[2])}</div><div class="def">${esc(v[3])}</div>
+            <div class="ex"><button class="spk" data-spk="${q(v[4])}">🔊</button><span>“${esc(v[4])}”</span></div>`
+          :`<div class="muted" style="margin-top:16px">先想中文意思…（按 🔊 聽發音）</div>`}
+      </div>
+      ${f?`<div class="grades">
+          <button class="g-again" data-g="again">再一次<small>&lt;5 分</small></button>
+          <button class="g-hard" data-g="hard">有點難<small>短間隔</small></button>
+          <button class="g-good" data-g="good">記得<small>正常</small></button>
+          <button class="g-easy" data-g="easy">很簡單<small>長間隔</small></button>
+        </div>`:`<button class="btn-primary" id="flip">顯示答案</button>`}
+    </div>
+    <p class="center"><a class="reset" onclick="review=null;tab='today';setNav();render()">結束複習</a></p>`;
+  bindSpk();
+  if(!f){ document.getElementById("flip").onclick=()=>{review.flipped=true;speak(v[0]);renderReview();}; }
+  else view.querySelectorAll(".grades button").forEach(b=>b.onclick=()=>{grade(id,b.dataset.g);review.i++;review.flipped=false;renderReview();});
+}
+
+/* ---- CARDS (deck browser) ---- */
+let deckFilter="all";
+function renderCards(){
+  if(review){ renderReview(); return; }
+  const du=dueCount(), nw=newLeftToday();
+  view.innerHTML=`
+    <div class="card">
+      <h2>單字 · ${VOCAB.length} 個（日常＋創業）</h2>
+      <button class="btn-primary" id="rev" ${du+nw===0?'disabled':''}>
+        ${du+nw===0?'目前沒有要複習的卡':'開始複習（待複習 '+du+' ＋ 新 '+nw+'）'}</button>
+    </div>
+    <div class="card">
+      <div class="filterbar" id="fb">
+        <button data-c="all" class="${deckFilter==='all'?'on':''}">全部</button>
+        ${Object.keys(CATS).map(c=>`<button data-c="${c}" class="${deckFilter===c?'on':''}">${CATS[c]}</button>`).join("")}
+      </div>
+      <div id="deck"></div>
+    </div>`;
+  document.getElementById("rev").onclick=()=>{ if(du+nw>0) startReview(); };
+  document.querySelectorAll("#fb button").forEach(b=>b.onclick=()=>{deckFilter=b.dataset.c;renderCards();});
+  const list=VOCAB.map((v,i)=>[v,i]).filter(([v])=>deckFilter==="all"||v[5]===deckFilter);
+  document.getElementById("deck").innerHTML=list.map(([v,i])=>{
+    const c=cardState(i);
+    const badge=!c.seen?'新':(c.due<=Date.now()?'待複習':'第'+c.reps+'次·'+c.interval+'天');
+    return `<div class="deck-item">
+      <button class="spk" data-spk="${q(v[0])}">🔊</button>
+      <div style="flex:1;margin-left:8px"><div class="t">${esc(v[0])}</div><div class="z">${esc(v[2])}</div></div>
+      <div class="b">${badge}</div></div>`;
+  }).join("");
+  bindSpk();
+}
+
+/* ---- READ ---- */
+function renderRead(){
+  const r=READINGS[S.readIdx%READINGS.length], map={};
+  r.gloss.forEach(([w,z])=>map[w.toLowerCase()]=z);
+  const html=r.body.replace(/\*\*(.+?)\*\*/g,(m,w)=>`<span class="gw" data-w="${q(w.toLowerCase())}">${esc(w)}</span>`);
+  const plain=r.body.replace(/\*\*/g,"");
+  view.innerHTML=`
+    <div class="card reading">
+      <div class="muted" style="display:flex;justify-content:space-between;align-items:center">
+        <span>短文 ${(S.readIdx%READINGS.length)+1} / ${READINGS.length}</span>
+        <button class="spk" data-spk="${q(plain)}">🔊</button>
+      </div>
+      <h2 style="margin:8px 0 6px">${esc(r.title)}</h2>
+      <p>${html}</p>
+      <div class="glossbox">${r.gloss.map(([w,z])=>`<div><b>${esc(w)}</b> — ${esc(z)}</div>`).join("")}</div>
+      <div class="hint">先看著讀一遍 → 按 🔊 聽整段 → 再讀一遍。約 85% 看得懂最理想（i+1）。</div>
+      <button class="btn-ghost" style="width:100%;margin-top:12px" id="next">讀完了，下一篇 →</button>
+    </div>`;
+  view.querySelectorAll(".gw").forEach(s=>s.onclick=()=>alert(s.textContent+"  ——  "+(map[s.dataset.w]||"")));
+  bindSpk();
+  document.getElementById("next").onclick=()=>{ S.readIdx++; markStudied(); setDaily("read"); save(); renderRead(); };
+}
+
+/* ---- SPEAK (shadowing + prompts) ---- */
+let shadowReps=0;
+function renderSpeak(){
+  const s=SHADOW[S.shadowIdx%SHADOW.length];
+  view.innerHTML=`
+    <div class="card center">
+      <div class="muted" style="display:flex;justify-content:space-between">
+        <span>跟讀 Shadowing ${(S.shadowIdx%SHADOW.length)+1}/${SHADOW.length}</span><span class="pill">研究最推薦的口說練法</span>
+      </div>
+      <div class="shadow-sent">${esc(s[0])}</div>
+      <div class="shadow-zh">${esc(s[1])}</div>
+      <div class="repdots">${[0,1,2,3,4].map(i=>`<span class="${i<shadowReps?'on':''}"></span>`).join("")}</div>
+      <div class="row" style="margin-top:6px">
+        <button class="btn-ghost" style="flex:1" data-spk="${q(s[0])}">🔊 正常速</button>
+        <button class="btn-ghost" style="flex:1" data-spkslow="${q(s[0])}">🐢 慢速</button>
+      </div>
+      <button class="btn-primary" style="margin-top:10px" id="repeat">我跟著唸了一次 ✓</button>
+      <button class="btn-ghost" id="recBtn" style="width:100%;margin-top:10px">● 錄音對比（聽自己 vs 範例）</button>
+      <div id="recOut" style="margin-top:10px"></div>
+      <div class="hint" style="margin-top:12px">怎麼練：按 🔊 聽 → 立刻模仿語調、節奏唸出聲 → 同一句重複 3–5 次。研究：唸 3–5 次 + 每天 15 分最有效。錄音聽自己跟範例差在哪。</div>
+      ${shadowReps>=3?`<button class="btn-ghost" style="width:100%;margin-top:10px" id="nextS">這句練熟了，下一句 →</button>`:''}
+    </div>
+
+    <div class="card">
+      <h2>開口回答 · Pushed Output</h2>
+      <p class="muted" style="margin:-4px 0 8px">看題目、用英文「說出聲」（不是打字）。逼自己生產語言、找出不會的地方：</p>
+      <p style="font-weight:600;font-style:italic">“${esc(PROMPTS[(S.shadowIdx+new Date().getDate())%PROMPTS.length])}”</p>
+      <button class="btn-ghost" id="spoke" style="width:100%;margin-top:8px">我說出聲回答了 ✓</button>
+      <div class="hint" style="margin-top:10px">上面跟讀卡有「錄音對比」。直接開檔（file://）麥克風會被擋；部署到 GitHub Pages（HTTPS）後就能錄音、聽自己 vs 範例。</div>
+    </div>`;
+  bindSpk();
+  view.querySelectorAll("[data-spkslow]").forEach(b=>b.onclick=()=>speak(b.dataset.spkslow,0.62));
+  document.getElementById("repeat").onclick=()=>{ shadowReps=Math.min(5,shadowReps+1); markStudied(); setDaily("speak"); save(); renderSpeak(); };
+  const ns=document.getElementById("nextS"); if(ns) ns.onclick=()=>{ S.shadowIdx++; shadowReps=0; save(); renderSpeak(); };
+  const recBtn=document.getElementById("recBtn"); if(recBtn) recBtn.onclick=()=>toggleRecord(recBtn,document.getElementById("recOut"));
+  document.getElementById("spoke").onclick=()=>{ markStudied(); setDaily("speak"); save(); alert("讚 👍 開口就是進步。回「今天」看看四件事完成幾項。"); };
+}
+
+/* ---- STATS ---- */
+function renderStats(){
+  const learned=learnedCount(), pct=Math.round(learned/VOCAB.length*100), byCat={};
+  Object.keys(CATS).forEach(c=>byCat[c]=[0,0]);
+  VOCAB.forEach((v,i)=>{byCat[v[5]][1]++; if(cardState(i).seen)byCat[v[5]][0]++;});
+  view.innerHTML=`
+    <div class="card">
+      <h2>進度</h2>
+      <div class="row">
+        <div class="stat"><b>${S.streak}</b><span>連續天數</span></div>
+        <div class="stat"><b>${learned}</b><span>學過單字</span></div>
+        <div class="stat"><b>${S.reviews}</b><span>累計複習</span></div>
+      </div>
+      <p class="muted" style="margin:14px 0 4px">整體 ${learned}/${VOCAB.length}（${pct}%）</p>
+      <div class="progbar"><i style="width:${pct}%"></i></div>
+    </div>
+    <div class="card">
+      <h2>各分類</h2>
+      ${Object.keys(CATS).map(c=>{const[a,b]=byCat[c],p=Math.round(a/b*100);
+        return `<p class="muted" style="margin:8px 0 2px">${CATS[c]} · ${a}/${b}</p><div class="progbar"><i style="width:${p}%"></i></div>`;}).join("")}
+    </div>
+    <div class="card center">
+      <p class="muted" style="margin:0 0 8px">所有進度都存在這台裝置的瀏覽器裡。</p>
+      <a class="reset" id="wipe">清除全部進度</a>
+    </div>`;
+  document.getElementById("wipe").onclick=()=>{ if(confirm("確定清除全部學習進度？無法復原。")){localStorage.removeItem(KEY);S=load();render();} };
+}
+
+/* ---------------- helpers ---------------- */
+function bindSpk(){ view.querySelectorAll("[data-spk]").forEach(b=>b.onclick=()=>speak(b.dataset.spk)); }
+function setNav(){ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab)); }
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{ tab=b.dataset.tab; if(tab!=="cards")review=null; if(tab!=="speak")shadowReps=0; setNav(); render(); });
+render();
+</script>
+</body>
+</html>
