@@ -76,6 +76,14 @@
   .progbar{height:8px; background:#eadfca; border-radius:99px; overflow:hidden; margin:8px 0}
   .progbar i{display:block; height:100%; background:var(--sage)}
   a.reset{color:var(--muted); font-size:12px; text-decoration:underline; cursor:pointer}
+  .kterm{display:inline-block; font-family:var(--mono); font-size:11px; color:var(--sage-d); background:#eef1e9; border:1px solid #d9e0cf; padding:3px 8px; border-radius:999px; margin:0 5px 5px 0; cursor:pointer}
+  .kbody{font-size:14.5px; line-height:1.85}
+  .kbody p{margin:0 0 8px}
+  .vidcard{display:block; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:10px; text-decoration:none; color:var(--ink)}
+  .vidcard:hover{background:#faf3e3}
+  .vidcard .vt{font-weight:600; margin-bottom:2px}
+  .vidcard .vm{font-size:12px; color:var(--muted)}
+  .lvl{font-family:var(--mono); font-size:10px; color:var(--plum); border:1px solid #ddd3e0; border-radius:999px; padding:1px 6px}
   .shadow-sent{font-family:"Noto Serif TC",serif; font-size:21px; line-height:1.5; margin:6px 0 4px}
   .shadow-zh{color:var(--muted); font-size:15px; margin-bottom:14px}
   .repdots{display:flex; gap:8px; justify-content:center; margin:12px 0}
@@ -93,7 +101,7 @@
 <nav>
   <button data-tab="today" class="on"><span class="ic">◎</span>今天</button>
   <button data-tab="cards"><span class="ic">▤</span>單字</button>
-  <button data-tab="read"><span class="ic">▢</span>閱讀</button>
+  <button data-tab="learn"><span class="ic">▢</span>學</button>
   <button data-tab="speak"><span class="ic">◑</span>口說</button>
   <button data-tab="stats"><span class="ic">◧</span>進度</button>
 </nav>
@@ -239,6 +247,44 @@ const READINGS = [
    gloss:[["How's it going?","最近好嗎"],["Nice to meet you","很高興認識你"],["Could you say that again?","可以再說一次嗎"],["Let me get back to you","我晚點回覆你"],["down to earth","務實親切"],["circle back","晚點再回來談"]]}
 ];
 
+/* ---------------- DATA: VIDEOS (comprehensible input, open on YouTube) ---------------- */
+// [title, channel, level, why, url]
+const VIDEOS = [
+  ["How Startup Fundraising Works","Y Combinator · Startup School","中","YC 親自講募資，SAFE 就是他們發明的，最權威","https://www.youtube.com/results?search_query=How+Startup+Fundraising+Works+Startup+School+Y+Combinator"],
+  ["How to Get and Evaluate Startup Ideas","Y Combinator","初中","怎麼找到好點子，講者口齒清楚、適合入門","https://www.youtube.com/results?search_query=How+to+Get+and+Evaluate+Startup+Ideas+Y+Combinator"],
+  ["Startup Fundraising 101","Carta","中","把 SAFE、可轉債、pre/post-money 講得很清楚","https://www.youtube.com/results?search_query=Carta+Startup+Fundraising+101"],
+  ["SAFE note explained","多個頻道","初中","專講 SAFE 怎麼運作，短而清楚","https://www.youtube.com/results?search_query=SAFE+note+explained+startup"],
+  ["Vesting and cliff explained","多個頻道","初中","搞懂股權怎麼分四年慢慢拿到","https://www.youtube.com/results?search_query=startup+vesting+cliff+explained"],
+  ["Y Combinator 官方頻道","Y Combinator","中","源源不絕的創辦人訪談與教學","https://www.youtube.com/@ycombinator"],
+  ["a16z 頻道","Andreessen Horowitz","中高","頂級創投的深度對談，內容偏進階","https://www.youtube.com/@a16z"],
+  ["Startup School 免費課程（網站）","Y Combinator","中","完整免費課程，邊看邊推進你的點子","https://www.startupschool.org/"]
+];
+
+/* ---------------- DATA: KNOWLEDGE (創投知識，白話中文 + 英文術語) ---------------- */
+// [title, terms[], body(段落用 \n 分隔)]
+const KNOWLEDGE = [
+  ["Vesting 與 Cliff：股權不是一次到手",["vesting","cliff"],
+   "創辦人和早期員工的股權，通常不是今天講好就全給你，而是分 4 年慢慢「歸屬」（vesting）。\n第一年有一道「懸崖」（cliff）：要待滿一年，才會一次拿到第一年的 25%；沒待滿一年就離開，一股都沒有。之後通常每個月慢慢歸屬剩下的。\n為什麼存在：避免有人拿了股權就走人，保護真正長期一起做的人。\n對你最重要：跟共同創辦人一定要簽 vesting。沒簽的話，萬一有人做兩個月就退出卻帶走一大塊股權，這叫 dead equity，會讓你之後很難募資。"],
+  ["什麼是 Y Combinator（YC）",["accelerator","demo day","SAFE"],
+   "YC 是全世界最有名的新創「加速器」（accelerator）。\n每年兩梯，每梯收幾百家很早期的團隊，給一筆小錢（近年約 50 萬美金）加上三個月密集輔導，最後是「路演日」（demo day），讓你對上百位投資人 pitch。YC 換取約 7% 股權。\n為什麼重要：進 YC 等於拿到頂級人脈和背書，募下一輪會容易很多。Airbnb、Stripe、Dropbox 都出自 YC。\n你常聽到的 SAFE 募資工具，就是 YC 發明的。"],
+  ["投資前後估值與稀釋（用數字看）",["pre-money valuation","post-money valuation","dilution"],
+   "舉個例子：\n你公司「投資前估值」（pre-money）＝ 800 萬。\n投資人投入 200 萬。\n「投資後估值」（post-money）＝ 800 ＋ 200 ＝ 1000 萬。\n投資人拿到的股權 ＝ 200 ÷ 1000 ＝ 20%。\n你和原股東就從 100% 被「稀釋」（dilution）到 80%。\n重點：每募一輪就稀釋一次。所以別太早募太多、也別一次賣太多股權，把空間留給後面幾輪。"],
+  ["SAFE 與可轉換債券（早期怎麼拿錢）",["SAFE","convertible note","valuation cap","discount"],
+   "早期公司估值很難定，所以常常不直接賣股，而是先用 SAFE 或「可轉換債券」（convertible note）拿錢，之後再轉成股權。\nSAFE（YC 版）：沒有利息、沒有到期日，最簡單，現在早期輪約九成用它。\nConvertible note：本質是借款，有利息也有到期日，比較複雜。\n兩者都會用「估值上限」（valuation cap）和「折扣」（discount）保護早期投資人，意思是：你早期願意冒險，之後轉股時給你更好的價格。"],
+  ["Cap Table 股權結構表",["cap table","option pool","due diligence"],
+   "Cap table 就是一張表，列出「誰持有公司多少股權」：創辦人、員工選擇權池（option pool）、每一輪的投資人。每次募資、每次發股權給員工，都要更新它。\n投資人做「盡職調查」（due diligence）時，第一個就是看 cap table，確認股權乾不乾淨：有沒有奇怪的人早期拿了一大塊、創辦人自己還剩多少。創辦人股權被稀釋太兇，投資人會擔心你失去動力。"],
+  ["創投基金怎麼運作（LP / GP / Carry）",["LP","GP","carry"],
+   "VC 自己也是跟別人募錢來投資。\n出錢給基金的人叫「有限合夥人」（LP），像退休基金、保險公司、有錢人。\n管理基金、決定投誰的人叫「普通合夥人」（GP）。\nGP 賺兩種錢：管理費（約每年 2%），和「績效分成」（carry，約賺到的 20%）。\n懂了這個，你就懂投資人為什麼一直問「這能變多大」：他們的大錢來自 carry，需要少數幾家公司大爆發，才能讓整支基金賺錢。"],
+  ["募資輪次：Pre-seed → Seed → A → B",["seed round","Series A","traction"],
+   "Pre-seed：最早期，常常只有想法或原型，投資人主要賭你這個人。\nSeed（種子輪）：驗證產品、做出一點「成長實績」（traction）、養前幾位員工。\nSeries A：已經有明顯成長，要把行得通的東西規模化。\nSeries B 以後：加速擴張、搶市場。\n每往後一輪，估值更高、金額更大，被要求的成績也更硬。早期講故事和潛力，後期看數字。"],
+  ["Term Sheet 最該看懂的幾條",["term sheet","liquidation preference","board seat","pro rata rights"],
+   "Term sheet（投資條件書）是投資人給的「我們打算這樣投」摘要，還不是正式合約，但後面合約都照它走。\n最關鍵幾條：\n估值多少。\n清算優先權（liquidation preference）：公司被賣或清算時誰先拿錢、拿多少。\noption pool 要留多大：留越大，被稀釋的是你。\n董事席次（board seat）：投資人要不要進董事會、影響你多少決策權。\n跟投權（pro rata rights）：之後幾輪他能不能繼續按比例投。\n簽之前每條都要懂，金額大就找律師看。"],
+  ["Runway 與 Burn：別讓公司沒油",["burn rate","runway"],
+   "Burn rate（燒錢速度）＝每個月淨支出。\nRunway（資金跑道）＝手上的錢 ÷ burn ＝還能撐幾個月。\n例：手上 60 萬、每月燒 4 萬 → runway 15 個月。\n鐵律：在 runway 燒完之前，要嘛做出能再募資的成績，要嘛開始賺錢。\n實務上通常在剩 6 個月時就要開始募下一輪，因為募資本身要花 2 到 4 個月。"],
+  ["估值是怎麼來的（早期是談出來的）",["valuation","TAM","down round"],
+   "早期公司沒什麼營收，估值不是算出來的，比較是「談」出來的：看團隊、市場有多大（TAM）、有沒有 traction、同類公司行情，還有你手上有幾個投資人在搶。\n注意：估值高不一定是好事。估太高、下一輪達不到，就會變成「估值下跌輪」（down round），很傷士氣，也會讓早期投資人的反稀釋條款啟動、把你稀釋得更兇。寧可估得合理、穩穩往上。"]
+];
+
 /* ---------------- DATA: SHADOWING (output / pronunciation) ---------------- */
 const SHADOW = [
   ["Hey, how's it going? Long time no see.","嘿，最近好嗎？好久不見。"],
@@ -358,10 +404,10 @@ async function toggleRecord(btn,out){
 
 /* ---------------- ROUTER ---------------- */
 const view=document.getElementById("view");
-let tab="today", review=null;
+let tab="today", review=null, learnSeg="read";
 function render(){
   document.getElementById("streakBadge").textContent="🔥 "+S.streak+" 天";
-  ({today:renderToday,cards:renderCards,read:renderRead,speak:renderSpeak,stats:renderStats}[tab])();
+  ({today:renderToday,cards:renderCards,learn:renderLearn,speak:renderSpeak,stats:renderStats}[tab])();
 }
 
 /* ---- TODAY ---- */
@@ -370,7 +416,7 @@ function renderToday(){
   const du=dueCount(), nw=newLeftToday(), total=du+nw, d=S.daily;
   const items=[
     ["review","複習單字（間隔重複）","cards", total>0?("待"+du+" ＋新"+nw):"今天已複習完"],
-    ["read","讀一篇短文（情境輸入）","read","去閱讀"],
+    ["read","讀短文 / 看影片 / 讀創投知識（輸入）","learn","去學"],
     ["speak","跟讀＋開口（口說輸出）","speak","去口說"],
     ["write","寫一句英文（輸出筆記）","today","往下寫"]
   ];
@@ -410,7 +456,7 @@ function renderToday(){
     const g=b.dataset.go;
     if(g==="cards"&&total>0){ startReview(); }
     else if(g==="today"){ document.getElementById("wbox").focus(); }
-    else { tab=g; setNav(); render(); }
+    else { if(g==="learn") learnSeg="read"; tab=g; setNav(); render(); }
   });
   document.getElementById("saveWrite").onclick=()=>{
     S.writeLog[todayStr()]=document.getElementById("wbox").value.trim();
@@ -487,13 +533,32 @@ function renderCards(){
   bindSpk();
 }
 
-/* ---- READ ---- */
-function renderRead(){
+/* ---- LEARN hub: 閱讀 / 看片 / 知識 ---- */
+function renderLearn(){
+  const tip=learnSeg==="read"?"略高於你程度、約 85% 看得懂的短文，文法語感自然吸收。"
+    :learnSeg==="watch"?"大量可理解輸入投報率最高。開英文字幕、聽不懂就放慢重看。"
+    :"白話中文講創投概念，英文術語嵌在裡面順便學。";
+  view.innerHTML=`
+    <div class="card">
+      <div class="filterbar" id="lseg">
+        <button data-s="read" class="${learnSeg==='read'?'on':''}">閱讀短文</button>
+        <button data-s="watch" class="${learnSeg==='watch'?'on':''}">看影片</button>
+        <button data-s="know" class="${learnSeg==='know'?'on':''}">創投知識</button>
+      </div>
+      <p class="muted" style="margin:8px 0 0">${tip}</p>
+    </div>
+    <div id="learnBody"></div>`;
+  view.querySelectorAll("#lseg button").forEach(b=>b.onclick=()=>{ learnSeg=b.dataset.s; renderLearn(); });
+  if(learnSeg==="read") learnRead();
+  else if(learnSeg==="watch") learnWatch();
+  else learnKnow();
+}
+function learnRead(){
   const r=READINGS[S.readIdx%READINGS.length], map={};
   r.gloss.forEach(([w,z])=>map[w.toLowerCase()]=z);
   const html=r.body.replace(/\*\*(.+?)\*\*/g,(m,w)=>`<span class="gw" data-w="${q(w.toLowerCase())}">${esc(w)}</span>`);
   const plain=r.body.replace(/\*\*/g,"");
-  view.innerHTML=`
+  document.getElementById("learnBody").innerHTML=`
     <div class="card reading">
       <div class="muted" style="display:flex;justify-content:space-between;align-items:center">
         <span>短文 ${(S.readIdx%READINGS.length)+1} / ${READINGS.length}</span>
@@ -501,13 +566,44 @@ function renderRead(){
       </div>
       <h2 style="margin:8px 0 6px">${esc(r.title)}</h2>
       <p>${html}</p>
-      <div class="glossbox">${r.gloss.map(([w,z])=>`<div><b>${esc(w)}</b> — ${esc(z)}</div>`).join("")}</div>
+      <div class="glossbox">${r.gloss.map(([w,z])=>`<div><b>${esc(w)}</b>：${esc(z)}</div>`).join("")}</div>
       <div class="hint">先看著讀一遍 → 按 🔊 聽整段 → 再讀一遍。約 85% 看得懂最理想（i+1）。</div>
       <button class="btn-ghost" style="width:100%;margin-top:12px" id="next">讀完了，下一篇 →</button>
     </div>`;
-  view.querySelectorAll(".gw").forEach(s=>s.onclick=()=>alert(s.textContent+"  ——  "+(map[s.dataset.w]||"")));
+  view.querySelectorAll(".gw").forEach(s=>s.onclick=()=>alert(s.textContent+"　："+(map[s.dataset.w]||"")));
   bindSpk();
-  document.getElementById("next").onclick=()=>{ S.readIdx++; markStudied(); setDaily("read"); save(); renderRead(); };
+  document.getElementById("next").onclick=()=>{ S.readIdx++; markStudied(); setDaily("read"); save(); learnRead(); };
+}
+function learnWatch(){
+  document.getElementById("learnBody").innerHTML=`
+    <div class="card">
+      <h2>字幕怎麼開最有效</h2>
+      <div class="kbody">
+        <p>① 一律開<b>英文字幕（CC）</b>，不要只看中文。只看中文＝在讀翻譯、沒在學；英文字幕＝耳朵聽＋眼睛對照才會進步。</p>
+        <p>② 想要<b>英中雙字幕＋點字查義</b>：裝免費 Chrome 擴充 <b>Language Reactor</b>，在 YouTube 同時顯示英＋中、點字看意思、可存生字。看影片學語言最強工具。</p>
+        <p>③ 聽不懂就放慢（YouTube 設定 → 0.75 速）＋重看同段。約 85% 聽得懂最理想。</p>
+      </div>
+      <a class="btn-ghost" style="display:block;text-align:center;text-decoration:none;margin-top:4px" href="https://www.languagereactor.com/" target="_blank" rel="noopener">裝 Language Reactor（免費）</a>
+    </div>
+    <div class="card">
+      <h2>精選影片 · 點了用 YouTube 開</h2>
+      ${VIDEOS.map(v=>`<a class="vidcard" href="${q(v[4])}" target="_blank" rel="noopener" data-watch="1">
+          <div class="vt">${esc(v[0])} <span class="lvl">${esc(v[2])}</span></div>
+          <div class="vm">${esc(v[1])}　·　${esc(v[3])}</div></a>`).join("")}
+      <div class="hint">每天看 20 分就夠。記得開英文字幕、配 Language Reactor。</div>
+    </div>`;
+  view.querySelectorAll("[data-watch]").forEach(a=>a.addEventListener("click",()=>{ markStudied(); setDaily("read"); save(); }));
+}
+function learnKnow(){
+  document.getElementById("learnBody").innerHTML=KNOWLEDGE.map(k=>`
+    <div class="card">
+      <h2>${esc(k[0])}</h2>
+      <div style="margin-bottom:8px">${k[1].map(t=>`<button class="kterm" data-spk="${q(t)}">🔊 ${esc(t)}</button>`).join("")}</div>
+      <div class="kbody">${k[2].split("\n").map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+    </div>`).join("")
+    + `<p class="muted center" style="font-size:12px;margin-bottom:4px">點術語上的 🔊 聽發音。讀這些也算今天有輸入。</p>`;
+  bindSpk();
+  markStudied(); setDaily("read"); save();
 }
 
 /* ---- SPEAK (shadowing + prompts) ---- */
