@@ -2,8 +2,16 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#6b8064">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Founder English">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="icon" type="image/png" href="icon-512.png">
 <title>Founder English｜創業者英語訓練</title>
 <style>
   :root{
@@ -566,6 +574,7 @@ function learnRead(){
   r.gloss.forEach(([w,z])=>map[w.toLowerCase()]=z);
   const html=r.body.replace(/\*\*(.+?)\*\*/g,(m,w)=>`<span class="gw" data-w="${q(w.toLowerCase())}">${esc(w)}</span>`);
   const plain=r.body.replace(/\*\*/g,"");
+  const zh=(typeof READING_ZH!=="undefined" && READING_ZH[r.title]) ? READING_ZH[r.title] : "";
   document.getElementById("learnBody").innerHTML=`
     <div class="card reading">
       <div class="muted" style="display:flex;justify-content:space-between;align-items:center">
@@ -575,11 +584,17 @@ function learnRead(){
       <h2 style="margin:8px 0 6px">${esc(r.title)}</h2>
       <p>${html}</p>
       <div class="glossbox">${r.gloss.map(([w,z])=>`<div><b>${esc(w)}</b>：${esc(z)}</div>`).join("")}</div>
-      <div class="hint">先看著讀一遍 → 按 🔊 聽整段 → 再讀一遍。約 85% 看得懂最理想（i+1）。</div>
+      ${zh?`<button class="btn-ghost" id="togZh" style="width:100%;margin-top:10px">看不懂？顯示中文翻譯</button>
+        <div id="zhBox" class="kbody" style="display:none;margin-top:10px;color:var(--muted);background:#f4eedd;border-radius:10px;padding:10px 12px"></div>`:''}
+      <div class="hint">先試著只看英文讀一遍 → 按 🔊 聽整段 → 真的卡住再看中文。約 85% 看得懂最理想（i+1）。</div>
       <button class="btn-ghost" style="width:100%;margin-top:12px" id="next">讀完了，下一篇 →</button>
     </div>`;
   view.querySelectorAll(".gw").forEach(s=>s.onclick=()=>alert(s.textContent+"　："+(map[s.dataset.w]||"")));
   bindSpk();
+  const tog=document.getElementById("togZh");
+  if(tog){ const box=document.getElementById("zhBox"); tog.onclick=()=>{
+    if(box.style.display==="none"){ box.textContent=zh; box.style.display="block"; tog.textContent="隱藏中文翻譯"; }
+    else { box.style.display="none"; tog.textContent="看不懂？顯示中文翻譯"; } }; }
   document.getElementById("next").onclick=()=>{ S.readIdx++; markStudied(); setDaily("read"); save(); learnRead(); };
 }
 function learnWatch(){
@@ -685,6 +700,9 @@ function bindSpk(){ view.querySelectorAll("[data-spk]").forEach(b=>b.onclick=()=
 function setNav(){ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab)); }
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{ tab=b.dataset.tab; if(tab!=="cards")review=null; if(tab!=="speak")shadowReps=0; setNav(); render(); });
 render();
+
+/* PWA: register service worker (offline + installable). Only works over HTTPS; silently no-ops on file://. */
+if("serviceWorker" in navigator){ window.addEventListener("load", function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); }); }
 </script>
 </body>
 </html>
